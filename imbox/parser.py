@@ -206,8 +206,8 @@ def parse_email(raw_email, policy=None):
                                             'Value': value})
 
     if parsed_email.get('date'):
-        timetuple = email.utils.parsedate(parsed_email['date'])
-        parsed_date = datetime.fromtimestamp(time.mktime(timetuple)) \
+        timetuple = email.utils.parsedate_tz(parsed_email['date'])
+        parsed_date = datetime.utcfromtimestamp(email.utils.mktime_tz(timetuple)) \
             if timetuple else None
         parsed_email['parsed_date'] = parsed_date
 
