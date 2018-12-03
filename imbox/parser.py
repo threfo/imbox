@@ -174,8 +174,14 @@ def parse_email(raw_email, policy=None):
                     attachments.append(attachment)
 
     elif maintype == 'text':
-        payload = decode_content(email_message)
-        body['plain'].append(payload)
+        # payload = decode_content(email_message)
+        # body['plain'].append(payload)
+        if email_message.get_content_subtype() == 'html':
+            payload = decode_content(email_message)
+            body['html'].append(payload)
+        elif email_message.get_content_subtype() == 'plain':
+            payload = decode_content(email_message)
+            body['plain'].append(payload)
 
     parsed_email['attachments'] = attachments
 
