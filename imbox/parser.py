@@ -179,7 +179,7 @@ def parse_email(raw_email, policy=None):
         if email_message.get_content_subtype() == 'html':
             payload = decode_content(email_message)
             body['html'].append(payload)
-        elif email_message.get_content_subtype() == 'plain':
+        else:
             payload = decode_content(email_message)
             body['plain'].append(payload)
 
