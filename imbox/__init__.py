@@ -12,10 +12,10 @@ __version__ = '.'.join([str(x) for x in __version_info__])
 class Imbox:
 
     def __init__(self, hostname, username=None, password=None, ssl=True,
-                 port=None, ssl_context=None, policy=None, starttls=False):
+                 port=None, ssl_context=None, policy=None, starttls=False, transport=None):
 
         self.server = ImapTransport(hostname, ssl=ssl, port=port,
-                                    ssl_context=ssl_context, starttls=starttls)
+                                    ssl_context=ssl_context, starttls=starttls, transport=transport)
         self.hostname = hostname
         self.username = username
         self.password = password
