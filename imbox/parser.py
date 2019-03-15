@@ -119,8 +119,8 @@ def parse_attachment(message_part):
     return None
 
 
-def decode_content(message):
-    content = message.get_payload()
+def decode_content(message, decode=True):
+    content = message.get_payload(decode=decode)
     charset = message.get_content_charset('utf-8')
     try:
         return content.decode(charset, 'ignore')
@@ -176,11 +176,13 @@ def parse_email(raw_email, policy=None):
     elif maintype == 'text':
         # payload = decode_content(email_message)
         # body['plain'].append(payload)
+        enc = email_message['Content-Transfer-Encoding']
+        decode = True if enc else False
         if email_message.get_content_subtype() == 'html':
-            payload = decode_content(email_message)
+            payload = decode_content(email_message, decode=decode)
             body['html'].append(payload)
         else:
-            payload = decode_content(email_message)
+            payload = decode_content(email_message, decode=decode)
             body['plain'].append(payload)
 
     parsed_email['attachments'] = attachments
